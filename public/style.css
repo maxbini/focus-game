@@ -1,0 +1,580 @@
+/* ============================================================
+   FOCUS — Dark Plastic Premium
+   Vertical panels top-bar + cardboard-framed full-width board
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-page:        #000000;
+  --board-surface:  #15151d;
+  --cell-dome-hi:   #3a3a4a;
+  --cell-dome-mid:  #2a2a36;
+  --cell-dome-lo:   #1a1a26;
+  --cell-edge:      #0d0d14;
+  --frame-light:    #f2efe9;
+  --frame-mid:      #e4dfd6;
+  --frame-dark:     #d1cbc0;
+  --panel-bg:       rgba(17, 17, 17, 0.85);
+  --panel-border:   rgba(255, 255, 255, 0.08);
+  --red:            #e11d48;
+  --red-light:      #ff6b81;
+  --red-dark:       #9f1239;
+  --red-glow:       rgba(225, 29, 72, 0.45);
+  --blue:           #2563eb;
+  --blue-light:     #60a5fa;
+  --blue-dark:      #1d4ed8;
+  --blue-glow:      rgba(37, 99, 235, 0.45);
+  --text:           #ffffff;
+  --text-secondary: #aaaaaa;
+  --text-muted:     #666666;
+  --font:           'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition:     0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { background: var(--bg-page); }
+
+body {
+  font-family: var(--font);
+  background: var(--bg-page);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  padding: 18px 16px 6px;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--red) 30%, var(--blue) 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.subtitle {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* ============================================================
+   TOP BAR — turn info above, panels below
+   ============================================================ */
+
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 8px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.turn-info {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+}
+
+.turn-info .dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.turn-info .dot.red  { background: var(--red);  box-shadow: 0 0 10px var(--red-glow); }
+.turn-info .dot.blue { background: var(--blue); box-shadow: 0 0 10px var(--blue-glow); }
+
+.panels-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+/* ============================================================
+   PANELS — glassmorphic vertical layout
+   ============================================================ */
+
+.glass {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px 12px;
+  flex: 1;
+  position: relative;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.panel .dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.panel .dot.red  { background: var(--red);  box-shadow: 0 0 12px var(--red-glow); }
+.panel .dot.blue { background: var(--blue); box-shadow: 0 0 12px var(--blue-glow); }
+
+.panel-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.stat-line {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.stat-line b {
+  color: var(--text);
+  font-weight: 700;
+  margin-left: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* YOU badge */
+.panel-badge {
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity var(--transition);
+  color: #fff;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+#panel-red  .panel-badge { background: var(--red); }
+#panel-blue .panel-badge { background: var(--blue); }
+
+.panel.is-you .panel-badge { opacity: 1; }
+
+/* Turn glow */
+.panel.is-turn { border-color: rgba(255, 255, 255, 0.16); }
+
+.panel.is-turn#panel-red {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--red-glow);
+}
+
+.panel.is-turn#panel-blue {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--blue-glow);
+}
+
+/* ============================================================
+   GAME AREA
+   ============================================================ */
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 8px 24px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* ============================================================
+   BOARD FRAME — white cardboard with rounded texture
+   ============================================================ */
+
+.board-frame {
+  width: 100%;
+  padding: 12px 12px 16px;
+  background: linear-gradient(175deg,
+    var(--frame-light) 0%,
+    var(--frame-mid) 40%,
+    var(--frame-dark) 100%);
+  border-radius: 18px;
+  box-shadow:
+    0 8px 36px rgba(0, 0, 0, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 4px rgba(255, 255, 255, 0.7),
+    inset 0 -4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Cardboard matte texture */
+.board-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   BOARD — grid inside frame
+   ============================================================ */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 4px;
+  padding: 6px;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--board-surface);
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   CELLS — semi-sphere domes
+   ============================================================ */
+
+.cell {
+  position: relative;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  cursor: pointer;
+  background: radial-gradient(circle at 42% 30%,
+    var(--cell-dome-hi) 0%,
+    var(--cell-dome-mid) 48%,
+    var(--cell-dome-lo) 82%,
+    var(--cell-edge) 100%);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.035);
+  transform: perspective(200px) rotateX(5deg);
+  transition:
+    transform 0.16s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.cell:not(.corner):not(.no-hover):hover {
+  background: radial-gradient(circle at 42% 30%,
+    #4a4a5a 0%,
+    #34344a 48%,
+    #22223a 82%,
+    #141422 100%);
+  transform: perspective(200px) rotateX(5deg) scale(1.05);
+}
+
+.cell:not(.corner):active {
+  transform: perspective(200px) rotateX(5deg) scale(0.93);
+}
+
+.cell.corner {
+  opacity: 0;
+  pointer-events: none;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.cell.selected {
+  box-shadow:
+    0 0 0 3px var(--text),
+    0 0 28px rgba(255, 255, 255, 0.25),
+    0 6px 12px rgba(0, 0, 0, 0.65),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.05);
+  transform: perspective(200px) rotateX(5deg) scale(1.09);
+  z-index: 5;
+}
+
+.cell.valid-move::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  animation: movePulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes movePulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50%      { transform: translate(-50%, -50%) scale(1.4); opacity: 0.65; }
+}
+
+/* ============================================================
+   PIECES — 3D plastic tokens
+   ============================================================ */
+
+.piece {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + var(--stack-pos, 0) * -5.5px));
+  z-index: calc(var(--stack-pos, 0) + 1);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.piece.red {
+  background: radial-gradient(circle at 36% 32%,
+    #ff8da1 0%, #ff6b81 7%, var(--red) 38%, #be123c 65%, var(--red-dark) 100%);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.28),
+    inset 0 3px 5px rgba(255, 255, 255, 0.1);
+}
+
+.piece.blue {
+  background: radial-gradient(circle at 36% 32%,
+    #93bbfd 0%, #60a5fa 7%, var(--blue) 38%, #1d4ed8 65%, #1e3a8a 100%);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.5),
+    0 1px 4px rgba(0, 0, 0, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.28),
+    inset 0 3px 5px rgba(255, 255, 255, 0.1);
+}
+
+.height-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  padding: 0 3px;
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--text);
+  font-size: 0.54rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  line-height: 1;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 9px 22px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all var(--transition);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.btn-reserve {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-reserve:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-reserve.active {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
+  color: #fff;
+  padding: 10px 30px;
+  font-size: 0.84rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+}
+
+/* ============================================================
+   OVERLAY
+   ============================================================ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.35s ease;
+}
+
+.overlay.hidden { display: none; }
+
+.overlay-card {
+  text-align: center;
+  padding: 40px 32px;
+  max-width: 360px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.overlay-card h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.overlay-card p {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .top-bar {
+    gap: 6px;
+    padding: 4px 6px 6px;
+  }
+
+  .panels-row { gap: 6px; }
+
+  .panel {
+    padding: 8px 8px 10px;
+    gap: 4px;
+  }
+
+  .panel-name { font-size: 0.72rem; }
+  .stat-line  { font-size: 0.7rem; }
+  .stat-line b { font-size: 0.82rem; }
+  .panel .dot { width: 11px; height: 11px; }
+
+  .turn-info {
+    font-size: 0.74rem;
+    padding: 6px 12px;
+  }
+
+  .board-frame {
+    padding: 8px 8px 11px;
+    border-radius: 14px;
+  }
+
+  .board {
+    gap: 2px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .game-area {
+    padding: 0 4px 16px;
+  }
+
+  .logo { font-size: 1.5rem; }
+  .header { padding: 12px 12px 2px; }
+}
+
+@media (max-width: 370px) {
+  .panel { padding: 6px 5px 8px; gap: 3px; border-radius: 12px; }
+  .panel-name { font-size: 0.64rem; letter-spacing: 0.06em; }
+  .stat-line { font-size: 0.62rem; }
+  .stat-line b { font-size: 0.72rem; }
+  .panel .dot { width: 9px; height: 9px; }
+  .panel-badge { font-size: 0.48rem; padding: 1px 6px; }
+
+  .turn-info { font-size: 0.68rem; padding: 5px 10px; border-radius: 10px; }
+  .board-frame { padding: 5px 5px 8px; border-radius: 10px; }
+
+  .btn { font-size: 0.68rem; padding: 7px 16px; }
+  .logo { font-size: 1.3rem; }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOCUS — Sid Sackson</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1 class="logo">FOCUS</h1>
+      <span class="subtitle">Sid Sackson</span>
+    </header>
+
+    <div class="top-bar">
+      <div class="turn-info" id="turn-info">Connessione...</div>
+      <div class="panels-row">
+        <div class="panel glass" id="panel-red">
+          <span class="dot red"></span>
+          <span class="panel-name">ROSSO</span>
+          <span class="stat-line">Riserva <b id="reserve-red">0</b></span>
+          <span class="stat-line">Catturati <b id="captured-red">0</b></span>
+          <span class="panel-badge" id="you-badge-red">TU</span>
+        </div>
+        <div class="panel glass" id="panel-blue">
+          <span class="dot blue"></span>
+          <span class="panel-name">BLU</span>
+          <span class="stat-line">Riserva <b id="reserve-blue">0</b></span>
+          <span class="stat-line">Catturati <b id="captured-blue">0</b></span>
+          <span class="panel-badge" id="you-badge-blue">TU</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <div class="board-frame">
+        <div class="board" id="board"></div>
+      </div>
+      <button class="btn btn-reserve" id="btn-reserve" disabled>
+        Piazza Riserva
+      </button>
+    </div>
+
+    <div class="overlay hidden" id="overlay">
+      <div class="overlay-card glass">
+        <h2 id="overlay-title"></h2>
+        <p id="overlay-msg"></p>
+        <button class="btn btn-primary" id="overlay-btn" onclick="location.reload()">
+          Nuova Partita
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
