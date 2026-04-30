@@ -2,13 +2,23 @@
 
 > A real-time multiplayer web implementation of the classic board game **Focus** by Sid Sackson, with a physical "Mondadori edition" skeuomorphic design.
 
+[![Live Demo](https://img.shields.io/badge/demo-live-blue)](https://focus-game-h85z.onrender.com)
+[![GitHub](https://img.shields.io/badge/github-maxbini/focus--game-333)](https://github.com/maxbini/focus-game)
 ![Version](https://img.shields.io/badge/version-0.1.3-black)
 ![License](https://img.shields.io/badge/license-MIT-black)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 
 ---
 
-## About the Game
+## Live Demo
+
+**Play now:** [focus-game-h85z.onrender.com](https://focus-game-h85z.onrender.com)
+
+Open the link on two devices (or two browser tabs) — the first player creates the lobby, the second joins automatically.
+
+---
+
+## Quick Start
 
 Focus is a two-player abstract strategy game played on an 8×8 board with the four corners removed. Each player starts with 18 pieces. Pieces can be stacked (forming "towers"), and a stack moves exactly as many squares as its height. Only the player whose color is on top of a stack controls it. The goal is to capture all opponent pieces or leave them with no legal moves.
 
@@ -19,8 +29,8 @@ Focus is a two-player abstract strategy game played on an 8×8 board with the fo
 ## Quick Start
 
 ```bash
-git clone <repo-url> focus
-cd focus
+git clone https://github.com/maxbini/focus-game.git
+cd focus-game
 npm install
 npm start
 ```
