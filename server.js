@@ -15,8 +15,8 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc:  ["'self'"],
-      styleSrc:   ["'self'", 'https://fonts.googleapis.com'],
-      fontSrc:    ["'self'", 'https://fonts.gstatic.com'],
+      styleSrc:   ["'self'"],
+      fontSrc:    ["'self'"],
       imgSrc:     ["'self'", 'data:'],
       connectSrc: ["'self'", 'ws:', 'wss:'],
       frameAncestors: ["'none'"],
@@ -31,6 +31,7 @@ const io = new Server(server, {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules/@fontsource/outfit')));
 
 const INITIAL_PIECES = 18;
 
@@ -194,7 +195,17 @@ function assertCell(data) {
     && Number.isInteger(data.col) && data.col >= 0 && data.col < 8;
 }
 
+const MAX_CONCURRENT = 200;
+let connectionCount = 0;
+
 io.on('connection', (socket) => {
+  connectionCount++;
+  if (connectionCount > MAX_CONCURRENT) {
+    socket.disconnect(true);
+    connectionCount--;
+    return;
+  }
+
   console.log(`+ ${socket.id}`);
 
   let roomId = null;
@@ -213,7 +224,7 @@ io.on('connection', (socket) => {
     room.players.push({ id: socket.id, color });
     socket.join(roomId);
 
-    socket.emit('joined', { room: roomId, color });
+    socket.emit('joined', { color });
 
     if (room.players.length === 2) {
       room.game = createGame();
@@ -305,6 +316,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
+    connectionCount--;
     console.log(`- ${socket.id}`);
     if (roomId && rooms[roomId]) {
       const other = rooms[roomId].players.find(p => p.id !== socket.id);

@@ -258,7 +258,13 @@ function refresh() {
   if (gameState.gameOver) {
     var w = gameState.winner === myColor ? 'Hai vinto!' : 'Hai perso!';
     var col = gameState.winner === 'red' ? 'ROSSO' : 'BLU';
-    turnInfo.innerHTML = '<span class="dot ' + gameState.winner + '"></span>' + w + ' (' + col + ')';
+
+    turnInfo.replaceChildren();
+    var dotEl = document.createElement('span');
+    dotEl.className = 'dot ' + gameState.winner;
+    turnInfo.appendChild(dotEl);
+    turnInfo.appendChild(document.createTextNode(w + ' (' + col + ')'));
+
     btnReserve.disabled = true;
     desel();
     showOverlay(w, w === 'Hai vinto!' ? 'Complimenti, hai sconfitto il tuo avversario!' : 'Il tuo avversario ha avuto la meglio. Riprova!');
@@ -268,7 +274,18 @@ function refresh() {
   var cur = gameState.currentPlayer;
   var cn  = cur === 'red' ? 'ROSSO' : 'BLU';
   var isMine = cur === myColor;
-  turnInfo.innerHTML = '<span class="dot ' + cur + '"></span>Turno: ' + cn + (isMine ? ' <b>(TU)</b>' : '');
+
+  turnInfo.replaceChildren();
+  var dotEl2 = document.createElement('span');
+  dotEl2.className = 'dot ' + cur;
+  turnInfo.appendChild(dotEl2);
+  turnInfo.appendChild(document.createTextNode('Turno: ' + cn));
+  if (isMine) {
+    turnInfo.appendChild(document.createTextNode(' '));
+    var btag = document.createElement('b');
+    btag.textContent = '(TU)';
+    turnInfo.appendChild(btag);
+  }
 
   var hasRes = gameState.reserves && gameState.reserves[myColor] > 0;
   btnReserve.disabled = !isMine || !hasRes;

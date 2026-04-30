@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.1.3] — 2026-04-30
+
+### Security
+- Replaced `innerHTML` with `textContent` + `createElement` in turn info rendering (OWASP A03 Injection)
+- Added `MAX_CONCURRENT = 200` connection limit with forceful disconnect (DoS protection)
+
+### GDPR Compliance
+- Google Fonts (`Outfit`) now self-hosted via `@fontsource/outfit` — zero third-party requests
+- Added `/privacy.html` (GDPR Art. 13: data controller, legal basis Art. 6(1)(f), rights Art. 15–21, retention)
+- Added `/terms.html` (service description, user conduct, limitation of liability, IP attribution)
+- CSP tightened: `style-src 'self'`, `font-src 'self'` (Google Fonts domains removed)
+- Footer with Privacy Policy and Terms of Service links added to main page
+- Room ID removed from `joined` event payload (no longer exposed to client)
+
+### UI
+- Active-turn panel now has interior colored glow (`inset 0 0 50px` with player color at 9% opacity)
+
 ## [0.1.2] — 2026-04-30
 
 ### Security
