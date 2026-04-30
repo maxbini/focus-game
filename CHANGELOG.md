@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1] — 2026-04-30
+
+### Changed
+- **Mondadori Physical Edition** theme: yellow mustard (`#D4AF37`) box interior, 10px white cardboard border, octagonal injection-molded black plastic board with `clip-path` + `drop-shadow` + noise texture
+- Glossy pinpoint reflection on pieces via `::after` radial gradient ellipse
+- Score panels: darker `#151515`, recessed `2px` border, physical controller look
+- Panel fonts enlarged: titles `clamp(1.1rem, 3vw, 1.5rem)`, labels `clamp(0.9rem, 2.2vw, 1.15rem)`, counters `clamp(1.5rem, 3.5vw, 2rem)`
+- Cell domes shrunk to `72%` of grid area (`place-self: center`) matching piece diameter — more visible black plastic surface between cells
+- Board grid gap increased to `clamp(6px, 1.5vw, 10px)`, padding to `clamp(10px, 2vw, 16px)`
+- Pieces fill `100%` of cell dome (same visual diameter as before), enhanced `drop-shadow` on hover (`0 8px 18px`) and selection (`0 12px 28px`)
+- Mobile: panels stack vertically below 420px; all font sizes use `clamp()` for native responsiveness
+
 ## [0.1.0] — 2026-04-30
 
 ### Added

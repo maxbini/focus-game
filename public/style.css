@@ -1,33 +1,33 @@
 /* ============================================================
-   FOCUS — Dark Plastic Premium
-   Vertical panels top-bar + cardboard-framed full-width board
+   FOCUS — Mondadori Physical Edition
+   Yellow-box container + octagonal injection-molded board
+   + glossy pieces + physical controller panels
    ============================================================ */
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
   --bg-page:        #000000;
-  --board-surface:  #15151d;
+  --box-yellow:     #D4AF37;
+  --box-border:     #ffffff;
+  --board-bg:       #0e0e14;
   --cell-dome-hi:   #3a3a4a;
   --cell-dome-mid:  #2a2a36;
   --cell-dome-lo:   #1a1a26;
   --cell-edge:      #0d0d14;
-  --frame-light:    #f2efe9;
-  --frame-mid:      #e4dfd6;
-  --frame-dark:     #d1cbc0;
-  --panel-bg:       rgba(17, 17, 17, 0.85);
-  --panel-border:   rgba(255, 255, 255, 0.08);
+  --panel-bg:       #151515;
+  --panel-border:   #2a2a2a;
   --red:            #e11d48;
   --red-light:      #ff6b81;
   --red-dark:       #9f1239;
-  --red-glow:       rgba(225, 29, 72, 0.45);
+  --red-glow:       rgba(225, 29, 72, 0.5);
   --blue:           #2563eb;
   --blue-light:     #60a5fa;
   --blue-dark:      #1d4ed8;
-  --blue-glow:      rgba(37, 99, 235, 0.45);
+  --blue-glow:      rgba(37, 99, 235, 0.5);
   --text:           #ffffff;
-  --text-secondary: #aaaaaa;
-  --text-muted:     #666666;
+  --text-secondary: #bbbbbb;
+  --text-muted:     #777777;
   --font:           'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --transition:     0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -56,11 +56,11 @@ body {
 
 .header {
   text-align: center;
-  padding: 18px 16px 6px;
+  padding: 22px 16px 8px;
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -76,9 +76,9 @@ body {
   font-size: 0.62rem;
   color: var(--text-muted);
   font-weight: 300;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /* ============================================================
@@ -89,30 +89,30 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 4px 10px 8px;
+  gap: 10px;
+  padding: 4px 10px 10px;
   width: 100%;
-  max-width: 700px;
+  max-width: 740px;
 }
 
 .turn-info {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-secondary);
   text-align: center;
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.03);
+  padding: 9px 24px;
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   width: 100%;
 }
 
 .turn-info .dot {
   display: inline-block;
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin-right: 6px;
+  margin-right: 7px;
   vertical-align: middle;
   position: relative;
   top: -1px;
@@ -123,74 +123,80 @@ body {
 
 .panels-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
 
 /* ============================================================
-   PANELS — glassmorphic vertical layout
+   PANELS — physical controller look (#151515, recessed border)
    ============================================================ */
-
-.glass {
-  background: var(--panel-bg);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
-  border: 1px solid var(--panel-border);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-}
 
 .panel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px 12px;
+  gap: 8px;
+  padding: 14px 16px 16px;
   flex: 1;
   position: relative;
+  background: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 .panel .dot {
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.panel .dot.red  { background: var(--red);  box-shadow: 0 0 12px var(--red-glow); }
-.panel .dot.blue { background: var(--blue); box-shadow: 0 0 12px var(--blue-glow); }
+.panel .dot.red {
+  background: radial-gradient(circle at 35% 33%, var(--red-light), var(--red) 55%, var(--red-dark));
+  box-shadow: 0 0 14px var(--red-glow), 0 0 30px rgba(225, 29, 72, 0.2);
+}
+
+.panel .dot.blue {
+  background: radial-gradient(circle at 35% 33%, var(--blue-light), var(--blue) 55%, var(--blue-dark));
+  box-shadow: 0 0 14px var(--blue-glow), 0 0 30px rgba(37, 99, 235, 0.2);
+}
 
 .panel-name {
-  font-size: 0.85rem;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-secondary);
 }
 
 .stat-line {
-  font-size: 0.78rem;
+  font-size: clamp(0.9rem, 2.2vw, 1.15rem);
   color: var(--text-secondary);
   white-space: nowrap;
-  line-height: 1.4;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
 }
 
 .stat-line b {
   color: var(--text);
   font-weight: 700;
-  margin-left: 4px;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin-left: 5px;
   font-variant-numeric: tabular-nums;
 }
 
 /* YOU badge */
 .panel-badge {
-  font-size: 0.55rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 9px;
   border-radius: 10px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   opacity: 0;
   transition: opacity var(--transition);
@@ -204,15 +210,21 @@ body {
 
 .panel.is-you .panel-badge { opacity: 1; }
 
-/* Turn glow */
-.panel.is-turn { border-color: rgba(255, 255, 255, 0.16); }
+/* Turn glow — active player panel lights up */
+.panel.is-turn { border-color: rgba(255, 255, 255, 0.2); }
 
 .panel.is-turn#panel-red {
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--red-glow);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 24px var(--red-glow),
+    0 0 50px rgba(225, 29, 72, 0.15);
 }
 
 .panel.is-turn#panel-blue {
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--blue-glow);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 24px var(--blue-glow),
+    0 0 50px rgba(37, 99, 235, 0.15);
 }
 
 /* ============================================================
@@ -223,74 +235,93 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  max-width: 700px;
-  padding: 0 8px 24px;
+  max-width: 740px;
+  padding: 0 10px 28px;
   flex: 1;
   justify-content: center;
 }
 
 /* ============================================================
-   BOARD FRAME — white cardboard with rounded texture
+   BOARD FRAME — white border + yellow mustard box interior
    ============================================================ */
 
 .board-frame {
   width: 100%;
-  padding: 12px 12px 16px;
-  background: linear-gradient(175deg,
-    var(--frame-light) 0%,
-    var(--frame-mid) 40%,
-    var(--frame-dark) 100%);
-  border-radius: 18px;
+  background: var(--box-yellow);
+  border: 10px solid var(--box-border);
+  border-radius: 8px;
+  padding: 40px;
   box-shadow:
-    0 8px 36px rgba(0, 0, 0, 0.55),
-    0 2px 8px rgba(0, 0, 0, 0.35),
-    inset 0 1px 4px rgba(255, 255, 255, 0.7),
-    inset 0 -4px 10px rgba(0, 0, 0, 0.1);
+    0 24px 80px rgba(0, 0, 0, 0.75),
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba(0, 0, 0, 0.06);
   position: relative;
 }
 
-/* Cardboard matte texture */
+/* Subtle matte texture on yellow interior */
 .board-frame::after {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 18px;
+  inset: 10px;
+  border-radius: 2px;
   background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
 }
 
 /* ============================================================
-   BOARD — grid inside frame
+   BOARD — octagonal injection-molded black plastic
    ============================================================ */
 
 .board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  gap: 4px;
-  padding: 6px;
+  gap: clamp(6px, 1.5vw, 10px);
+  padding: clamp(10px, 2vw, 16px);
   width: 100%;
   aspect-ratio: 1;
-  background: var(--board-surface);
-  border-radius: 12px;
   position: relative;
   z-index: 1;
+
+  /* Octagonal shape */
+  clip-path: polygon(
+    14% 0%,  86% 0%,
+    100% 14%, 100% 86%,
+    86% 100%, 14% 100%,
+    0% 86%,  0% 14%
+  );
+
+  /* Octagon-following drop shadow */
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+
+  /* Board surface: dark plastic base + noise texture */
+  background:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E") repeat,
+    linear-gradient(145deg, #13131e 0%, #0d0d16 100%);
+
+  /* Injection-molded raised edge */
   box-shadow:
-    inset 0 3px 10px rgba(0, 0, 0, 0.4);
+    inset 0 2px 3px rgba(255, 255, 255, 0.06),
+    inset 2px 0 2px rgba(255, 255, 255, 0.03),
+    inset 0 -5px 12px rgba(0, 0, 0, 0.55),
+    inset -2px 0 3px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================================
-   CELLS — semi-sphere domes
+   CELLS — semi-sphere domes on plastic surface
    ============================================================ */
 
 .cell {
   position: relative;
   border-radius: 50%;
   aspect-ratio: 1;
+  width: 72%;
+  height: 72%;
+  place-self: center;
   cursor: pointer;
   background: radial-gradient(circle at 42% 30%,
     var(--cell-dome-hi) 0%,
@@ -298,10 +329,10 @@ body {
     var(--cell-dome-lo) 82%,
     var(--cell-edge) 100%);
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.6),
-    0 1px 3px rgba(0, 0, 0, 0.35),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.45),
-    inset 0 2px 3px rgba(255, 255, 255, 0.035);
+    0 4px 10px rgba(0, 0, 0, 0.65),
+    0 1px 3px rgba(0, 0, 0, 0.4),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.5),
+    inset 0 2px 3px rgba(255, 255, 255, 0.03);
   transform: perspective(200px) rotateX(5deg);
   transition:
     transform 0.16s cubic-bezier(0.4, 0, 0.2, 1),
@@ -319,7 +350,7 @@ body {
 }
 
 .cell:not(.corner):active {
-  transform: perspective(200px) rotateX(5deg) scale(0.93);
+  transform: perspective(200px) rotateX(5deg) scale(0.92);
 }
 
 .cell.corner {
@@ -333,20 +364,21 @@ body {
 .cell.selected {
   box-shadow:
     0 0 0 3px var(--text),
-    0 0 28px rgba(255, 255, 255, 0.25),
-    0 6px 12px rgba(0, 0, 0, 0.65),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.45),
-    inset 0 2px 3px rgba(255, 255, 255, 0.05);
-  transform: perspective(200px) rotateX(5deg) scale(1.09);
+    0 0 30px rgba(255, 255, 255, 0.3),
+    0 6px 14px rgba(0, 0, 0, 0.7),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.5),
+    inset 0 2px 3px rgba(255, 255, 255, 0.06);
+  transform: perspective(200px) rotateX(5deg) scale(1.1);
   z-index: 5;
 }
 
+/* Valid move indicator */
 .cell.valid-move::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 24%;
+  width: 26%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
@@ -358,18 +390,18 @@ body {
 }
 
 @keyframes movePulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-  50%      { transform: translate(-50%, -50%) scale(1.4); opacity: 0.65; }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.35; }
+  50%      { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
 }
 
 /* ============================================================
-   PIECES — 3D plastic tokens
+   PIECES — glossy 3D plastic tokens with pinpoint reflection
    ============================================================ */
 
 .piece {
   position: absolute;
-  width: 72%;
-  height: 72%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   top: 50%;
   left: 50%;
@@ -383,9 +415,9 @@ body {
   background: radial-gradient(circle at 36% 32%,
     #ff8da1 0%, #ff6b81 7%, var(--red) 38%, #be123c 65%, var(--red-dark) 100%);
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.5),
-    0 1px 4px rgba(0, 0, 0, 0.3),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.55),
+    0 1px 4px rgba(0, 0, 0, 0.35),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
     inset 0 3px 5px rgba(255, 255, 255, 0.1);
 }
 
@@ -393,23 +425,58 @@ body {
   background: radial-gradient(circle at 36% 32%,
     #93bbfd 0%, #60a5fa 7%, var(--blue) 38%, #1d4ed8 65%, #1e3a8a 100%);
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.5),
-    0 1px 4px rgba(0, 0, 0, 0.3),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.55),
+    0 1px 4px rgba(0, 0, 0, 0.35),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
     inset 0 3px 5px rgba(255, 255, 255, 0.1);
 }
 
+/* Glossy pinpoint reflection */
+.piece::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 16%;
+  width: 20%;
+  height: 16%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.25) 40%,
+    rgba(255, 255, 255, 0) 100%);
+  transform: rotate(-22deg);
+  pointer-events: none;
+}
+
+/* Enhanced drop-shadow on hover / selection */
+.cell:not(.corner):hover .piece {
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.7),
+    0 2px 6px rgba(0, 0, 0, 0.45),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px rgba(255, 255, 255, 0.1);
+}
+
+.cell.selected .piece {
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.8),
+    0 3px 8px rgba(0, 0, 0, 0.55),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Height badge */
 .height-badge {
   position: absolute;
   top: -4px;
   right: -4px;
-  min-width: 16px;
-  height: 16px;
-  border-radius: 8px;
-  padding: 0 3px;
-  background: rgba(0, 0, 0, 0.9);
+  min-width: 17px;
+  height: 17px;
+  border-radius: 9px;
+  padding: 0 4px;
+  background: rgba(0, 0, 0, 0.92);
   color: var(--text);
-  font-size: 0.54rem;
+  font-size: 0.56rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -425,13 +492,13 @@ body {
 
 .btn {
   font-family: var(--font);
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  padding: 9px 22px;
+  padding: 10px 24px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   transition: all var(--transition);
   text-transform: uppercase;
   line-height: 1;
@@ -443,33 +510,33 @@ body {
 }
 
 .btn-reserve {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-reserve:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-reserve.active {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
 }
 
 .btn-primary {
   background: linear-gradient(135deg, var(--red) 0%, var(--blue) 100%);
   color: #fff;
-  padding: 10px 30px;
-  font-size: 0.84rem;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+  padding: 12px 34px;
+  font-size: 0.86rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================================
@@ -479,7 +546,7 @@ body {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: flex;
@@ -493,23 +560,29 @@ body {
 
 .overlay-card {
   text-align: center;
-  padding: 40px 32px;
-  max-width: 360px;
+  padding: 44px 36px;
+  max-width: 380px;
   width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  background: rgba(21, 21, 21, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
 .overlay-card h2 {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
 }
 
 .overlay-card p {
   color: var(--text-secondary);
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   line-height: 1.6;
 }
 
@@ -522,59 +595,74 @@ body {
    RESPONSIVE
    ============================================================ */
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .top-bar {
     gap: 6px;
     padding: 4px 6px 6px;
   }
 
-  .panels-row { gap: 6px; }
+  .panels-row { gap: 8px; }
 
   .panel {
-    padding: 8px 8px 10px;
-    gap: 4px;
+    padding: 10px 10px 12px;
+    gap: 5px;
+    border-radius: 14px;
   }
 
-  .panel-name { font-size: 0.72rem; }
-  .stat-line  { font-size: 0.7rem; }
-  .stat-line b { font-size: 0.82rem; }
-  .panel .dot { width: 11px; height: 11px; }
+  .turn-info {
+    font-size: 0.8rem;
+    padding: 7px 16px;
+  }
+
+  .board-frame {
+    border-width: 7px;
+    padding: 24px;
+    border-radius: 6px;
+  }
+
+  .board {
+    clip-path: polygon(16% 0%, 84% 0%, 100% 16%, 100% 84%, 84% 100%, 16% 100%, 0% 84%, 0% 16%);
+  }
+
+  .game-area {
+    padding: 0 6px 20px;
+  }
+
+  .logo { font-size: 1.7rem; }
+  .header { padding: 14px 12px 4px; }
+}
+
+@media (max-width: 420px) {
+  .panels-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .panel {
+    padding: 8px 6px 10px;
+    gap: 3px;
+    border-radius: 12px;
+    border-width: 1.5px;
+  }
+
+  .panel-badge { font-size: 0.5rem; padding: 1px 6px; }
 
   .turn-info {
     font-size: 0.74rem;
     padding: 6px 12px;
+    border-radius: 10px;
   }
 
   .board-frame {
-    padding: 8px 8px 11px;
-    border-radius: 14px;
+    border-width: 5px;
+    padding: 14px;
+    border-radius: 4px;
   }
 
   .board {
-    gap: 2px;
-    padding: 4px;
-    border-radius: 8px;
+    clip-path: polygon(18% 0%, 82% 0%, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0% 82%, 0% 18%);
   }
 
-  .game-area {
-    padding: 0 4px 16px;
-  }
-
-  .logo { font-size: 1.5rem; }
-  .header { padding: 12px 12px 2px; }
-}
-
-@media (max-width: 370px) {
-  .panel { padding: 6px 5px 8px; gap: 3px; border-radius: 12px; }
-  .panel-name { font-size: 0.64rem; letter-spacing: 0.06em; }
-  .stat-line { font-size: 0.62rem; }
-  .stat-line b { font-size: 0.72rem; }
-  .panel .dot { width: 9px; height: 9px; }
-  .panel-badge { font-size: 0.48rem; padding: 1px 6px; }
-
-  .turn-info { font-size: 0.68rem; padding: 5px 10px; border-radius: 10px; }
-  .board-frame { padding: 5px 5px 8px; border-radius: 10px; }
-
-  .btn { font-size: 0.68rem; padding: 7px 16px; }
-  .logo { font-size: 1.3rem; }
+  .btn { font-size: 0.7rem; padding: 8px 18px; }
+  .logo { font-size: 1.4rem; }
 }
