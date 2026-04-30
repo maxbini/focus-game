@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.2] — 2026-04-30
+
+### Security
+- Added `helmet` middleware with 14 security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, COOP, CORP, etc.)
+- Custom `Content-Security-Policy`: `script-src 'self'`, `style-src 'self'`, `connect-src 'self' ws: wss:`, `frame-ancestors 'none'`, `object-src 'none'`, `script-src-attr 'none'`
+- Removed inline `onclick` from HTML (violates `script-src-attr 'none'`) — moved to `addEventListener` in `game.js`
+- Room IDs now use `crypto.randomBytes()` instead of `Math.random()` (cryptographically secure)
+- Socket.io CORS restricted to `origin: false` (same-origin only)
+- Input validation guards `assertCoords()` / `assertCell()` on `move` and `place-reserve` socket events
+
 ## [0.1.1] — 2026-04-30
 
 ### Changed

@@ -1,13 +1,34 @@
 'use strict';
 
+const crypto = require('crypto');
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const helmet = require('helmet');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc:  ["'self'"],
+      styleSrc:   ["'self'", 'https://fonts.googleapis.com'],
+      fontSrc:    ["'self'", 'https://fonts.gstatic.com'],
+      imgSrc:     ["'self'", 'data:'],
+      connectSrc: ["'self'", 'ws:', 'wss:'],
+      frameAncestors: ["'none'"],
+      formAction: ["'self'"]
+    }
+  },
+  crossOriginEmbedderPolicy: false
+}));
+
+const io = new Server(server, {
+  cors: { origin: false }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -144,7 +165,7 @@ function findOrCreateRoom() {
   for (const [id, room] of Object.entries(rooms)) {
     if (room.players.length === 1 && !room.game) return id;
   }
-  const id = Math.random().toString(36).substring(2, 8);
+  const id = crypto.randomBytes(3).toString('hex');
   rooms[id] = { id, players: [], game: null };
   return id;
 }
@@ -157,6 +178,20 @@ function createGame() {
     gameOver: false,
     winner: null
   };
+}
+
+function assertCoords(data) {
+  return data != null
+    && Number.isInteger(data.fromRow) && data.fromRow >= 0 && data.fromRow < 8
+    && Number.isInteger(data.fromCol) && data.fromCol >= 0 && data.fromCol < 8
+    && Number.isInteger(data.toRow)   && data.toRow   >= 0 && data.toRow   < 8
+    && Number.isInteger(data.toCol)   && data.toCol   >= 0 && data.toCol   < 8;
+}
+
+function assertCell(data) {
+  return data != null
+    && Number.isInteger(data.row) && data.row >= 0 && data.row < 8
+    && Number.isInteger(data.col) && data.col >= 0 && data.col < 8;
 }
 
 io.on('connection', (socket) => {
@@ -191,6 +226,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('move', (data) => {
+    if (!assertCoords(data)) return;
     if (!roomId || !rooms[roomId] || !rooms[roomId].game) return;
     const game = rooms[roomId].game;
     if (game.gameOver || game.currentPlayer !== color) {
@@ -230,6 +266,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('place-reserve', (data) => {
+    if (!assertCell(data)) return;
     if (!roomId || !rooms[roomId] || !rooms[roomId].game) return;
     const game = rooms[roomId].game;
     if (game.gameOver || game.currentPlayer !== color) {

@@ -293,6 +293,10 @@ function showOverlay(title, msg) {
   overlay.classList.remove('hidden');
 }
 
+document.getElementById('overlay-btn').addEventListener('click', function () {
+  location.reload();
+});
+
 // ── Socket ──
 function connect() {
   socket = io();
