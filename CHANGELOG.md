@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.4] — 2026-04-30
+
+### Added
+- **Tower splitting**: a player can now move any number of pieces from a stack (1 to full height). Distance = pieces moved. Visible split/full indicators on valid-move cells.
+
+### Fixed
+- Cells invisible at startup: root cause was `filter: drop-shadow()` on `.board` creating a new containing block that broke CSS Grid percentage sizing in Chromium
+- Cell sizing: replaced `width:72% + place-self:center + aspect-ratio` with `margin: 14%` for cross-browser compatibility
+
+### Changed
+- Removed `filter: drop-shadow()` from `.board` (grid child rendering bug)
+- Valid-move indicators differentiated: `.full::after` (26%, standard pulse) for full moves, `.split::after` (18%, subtle pulse) for splits
+
 ## [0.1.3] — 2026-04-30
 
 ### Security

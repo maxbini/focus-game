@@ -84,14 +84,16 @@ function getValidMoves(board, r, c) {
   if (!stack || !Array.isArray(stack) || stack.length === 0) return [];
 
   const h = stack.length;
-  const dirs = [[-h, 0], [h, 0], [0, -h], [0, h]];
+  const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
   const moves = [];
 
-  for (const [dr, dc] of dirs) {
-    const nr = r + dr;
-    const nc = c + dc;
-    if (isValidSquare(nr, nc)) {
-      moves.push({ row: nr, col: nc });
+  for (let d = 1; d <= h; d++) {
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr * d;
+      const nc = c + dc * d;
+      if (isValidSquare(nr, nc)) {
+        moves.push({ row: nr, col: nc });
+      }
     }
   }
 
@@ -133,10 +135,11 @@ function countPieces(board, color) {
 function executeMove(board, fr, fc, tr, tc, player, reserves) {
   const moving = board[fr][fc];
   const dest = board[tr][tc];
+  const distance = Math.abs(fr - tr) || Math.abs(fc - tc);
 
-  board[fr][fc] = [];
+  const movedPieces = moving.splice(moving.length - distance, distance);
 
-  const combined = (dest && Array.isArray(dest) ? [...dest] : []).concat(moving);
+  const combined = (dest && Array.isArray(dest) ? [...dest] : []).concat(movedPieces);
 
   while (combined.length > 5) {
     const removed = combined.shift();
@@ -254,6 +257,12 @@ io.on('connection', (socket) => {
     }
     if (stack[stack.length - 1] !== color) {
       socket.emit('error', { message: 'Non controlli questa pila' });
+      return;
+    }
+
+    const distance = Math.abs(fr - tr) || Math.abs(fc - tc);
+    if (distance < 1 || distance > stack.length) {
+      socket.emit('error', { message: 'Split non valido' });
       return;
     }
 

@@ -54,10 +54,13 @@ function stackAt(r, c) {
 
 function movesFrom(r, c, h) {
   var out = [];
-  for (var _i = 0, _a = [[-h, 0], [h, 0], [0, -h], [0, h]]; _i < _a.length; _i++) {
-    var dr = _a[_i][0], dc = _a[_i][1];
-    var nr = r + dr, nc = c + dc;
-    if (isValid(nr, nc)) out.push({ row: nr, col: nc });
+  var dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+  for (var d = 1; d <= h; d++) {
+    for (var i = 0; i < dirs.length; i++) {
+      var nr = r + dirs[i][0] * d;
+      var nc = c + dirs[i][1] * d;
+      if (isValid(nr, nc)) out.push({ row: nr, col: nc, distance: d });
+    }
   }
   return out;
 }
@@ -96,7 +99,7 @@ function render() {
       if (!el || el.classList.contains('corner')) continue;
 
       el.innerHTML = '';
-      el.classList.remove('selected', 'valid-move');
+      el.classList.remove('selected', 'valid-move', 'full', 'split');
 
       var stack = gameState.board[r][c];
       if (!stack || !Array.isArray(stack) || stack.length === 0) continue;
@@ -125,25 +128,31 @@ function render() {
 }
 
 function showMoves() {
-  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move'); });
+  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
   if (!selected || placeMode) return;
 
   var sv = toServer(selected.row, selected.col);
   var s = stackAt(sv.row, sv.col);
   if (!s || !Array.isArray(s) || s.length === 0) return;
 
-  validMoves = movesFrom(sv.row, sv.col, s.length).map(function (m) {
-    return toVisual(m.row, m.col);
+  var fullHeight = s.length;
+
+  validMoves = movesFrom(sv.row, sv.col, fullHeight).map(function (m) {
+    var v = toVisual(m.row, m.col);
+    return { row: v.row, col: v.col, distance: m.distance };
   });
 
   validMoves.forEach(function (m) {
     var el = document.querySelector('.cell[data-row="' + m.row + '"][data-col="' + m.col + '"]');
-    if (el) el.classList.add('valid-move');
+    if (el) {
+      el.classList.add('valid-move');
+      el.classList.add(m.distance === fullHeight ? 'full' : 'split');
+    }
   });
 }
 
 function showReserveTargets() {
-  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move'); });
+  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
   if (!gameState) return;
 
   for (var r = 0; r < 8; r++) {
@@ -174,7 +183,7 @@ function desel() {
   }
   selected = null;
   validMoves = [];
-  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move'); });
+  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
 }
 
 function setPlace(v) {
@@ -187,7 +196,7 @@ function setPlace(v) {
   } else {
     btnReserve.classList.remove('active');
     btnReserve.textContent = 'Piazza Riserva';
-    document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move'); });
+  document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
   }
 }
 
