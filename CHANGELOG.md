@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5] — 2026-05-05
+
+### Changed
+- Panel vertical height halved: reduced `gap`, `padding`, `line-height`, dot size, and badge margins
+- Compressed vertical spacing: header, top-bar, game-area, and board-frame padding all reduced
+- Removed `flex: 1` from game-area (eliminated elastic empty space between panels and board)
+
 ## [0.1.4] — 2026-04-30
 
 ### Added
