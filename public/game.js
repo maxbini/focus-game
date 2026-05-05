@@ -15,6 +15,7 @@ const reserveRed    = document.getElementById('reserve-red');
 const reserveBlue   = document.getElementById('reserve-blue');
 const capturedRed   = document.getElementById('captured-red');
 const capturedBlue  = document.getElementById('captured-blue');
+const towerPreview  = document.getElementById('tower-preview');
 
 // ── Constants ──
 const CORNERS = new Set([
@@ -129,12 +130,13 @@ function render() {
 
 function showMoves() {
   document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
-  if (!selected || placeMode) return;
+  if (!selected || placeMode) { hideTowerPreview(); return; }
 
   var sv = toServer(selected.row, selected.col);
   var s = stackAt(sv.row, sv.col);
   if (!s || !Array.isArray(s) || s.length === 0) return;
 
+  showTowerPreview(s);
   var fullHeight = s.length;
 
   validMoves = movesFrom(sv.row, sv.col, fullHeight).map(function (m) {
@@ -149,6 +151,29 @@ function showMoves() {
       el.classList.add(m.distance === fullHeight ? 'full' : 'split');
     }
   });
+}
+
+// ── Tower preview ──
+function showTowerPreview(stack) {
+  towerPreview.innerHTML = '';
+
+  for (var i = 0; i < stack.length; i++) {
+    var p = document.createElement('div');
+    p.className = 'preview-piece ' + stack[i];
+    p.style.setProperty('--preview-pos', stack.length - 1 - i);
+    towerPreview.appendChild(p);
+  }
+
+  var info = document.createElement('div');
+  info.className = 'preview-info';
+  info.textContent = 'Torre: ' + stack.length;
+  towerPreview.appendChild(info);
+
+  towerPreview.classList.remove('hidden');
+}
+
+function hideTowerPreview() {
+  towerPreview.classList.add('hidden');
 }
 
 function showReserveTargets() {
@@ -177,6 +202,7 @@ function sel(r, c) {
 }
 
 function desel() {
+  hideTowerPreview();
   if (selected) {
     var el = document.querySelector('.cell[data-row="' + selected.row + '"][data-col="' + selected.col + '"]');
     if (el) el.classList.remove('selected');

@@ -1,6 +1,6 @@
 {
   "name": "focus-game",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Focus — Sid Sackson multiplayer board game",
   "main": "server.js",
   "scripts": {

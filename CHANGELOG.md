@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.6] — 2026-05-05
+
+### Added
+- **Tower preview**: when a stack is selected during your turn, a lateral-view card appears centered over the panels showing stacked miniature pieces with leaning offset, height, and colors — never overlaps the board
+
 ## [0.1.5] — 2026-05-05
 
 ### Changed
