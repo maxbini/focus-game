@@ -245,10 +245,10 @@ body {
   align-items: center;
   gap: 3px;
   padding: 8px 12px;
-  background: rgba(4, 4, 8, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(20, 20, 32, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7), 0 0 2px rgba(255, 255, 255, 0.05);
   min-width: 56px;
 }
 
