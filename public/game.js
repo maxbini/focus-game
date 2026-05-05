@@ -130,7 +130,7 @@ function render() {
 
 function showMoves() {
   document.querySelectorAll('.cell.valid-move').forEach(function (c) { c.classList.remove('valid-move', 'full', 'split'); });
-  if (!selected || placeMode) { hideTowerPreview(); return; }
+  if (!selected || placeMode) return;
 
   var sv = toServer(selected.row, selected.col);
   var s = stackAt(sv.row, sv.col);
@@ -154,15 +154,26 @@ function showMoves() {
 }
 
 // ── Tower preview ──
+function updateTowerPreview(r, c) {
+  var sv = toServer(r, c);
+  var s = stackAt(sv.row, sv.col);
+  if (!s || !Array.isArray(s) || s.length === 0) return;
+  showTowerPreview(s);
+}
+
 function showTowerPreview(stack) {
   towerPreview.innerHTML = '';
+
+  var piecesRow = document.createElement('div');
+  piecesRow.className = 'preview-pieces';
 
   for (var i = 0; i < stack.length; i++) {
     var p = document.createElement('div');
     p.className = 'preview-piece ' + stack[i];
-    p.style.setProperty('--preview-pos', stack.length - 1 - i);
-    towerPreview.appendChild(p);
+    piecesRow.appendChild(p);
   }
+
+  towerPreview.appendChild(piecesRow);
 
   var info = document.createElement('div');
   info.className = 'preview-info';
@@ -202,7 +213,6 @@ function sel(r, c) {
 }
 
 function desel() {
-  hideTowerPreview();
   if (selected) {
     var el = document.querySelector('.cell[data-row="' + selected.row + '"][data-col="' + selected.col + '"]');
     if (el) el.classList.remove('selected');
@@ -229,6 +239,9 @@ function setPlace(v) {
 // ── Clicks ──
 function onCell(r, c) {
   if (!gameState || gameState.gameOver || !myColor) return;
+
+  updateTowerPreview(r, c);
+
   if (gameState.currentPlayer !== myColor) return;
 
   if (placeMode) {

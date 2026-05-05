@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.7] — 2026-05-05
+
+### Added
+- **Tower preview card** below the board showing stacked pieces in side view (2D), available on any click — own turn, opponent's turn, any player's pieces
+- Pieces rendered as cylinders with semi-circle dome, rotated 90° horizontally (lying down), overlapping in a row
+
+### Changed
+- Preview persists after deselection — stays visible until game state resets
+
 ## [0.1.6] — 2026-05-05
 
 ### Added
