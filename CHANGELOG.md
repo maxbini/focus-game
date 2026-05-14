@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.8] — 2026-05-05
+
+### Changed
+- **New initial layout**: checkerboard pattern on rows 1–6, alternating Red/Blue every two columns — both players start interleaved in the center of the board instead of on opposite sides
+
 ## [0.1.7] — 2026-05-05
 
 ### Added

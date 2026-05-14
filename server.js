@@ -42,10 +42,6 @@ const CORNERS = new Set([
   '6,7', '7,6', '7,7'
 ]);
 
-function range(s, e) {
-  return Array.from({ length: e - s + 1 }, (_, i) => s + i);
-}
-
 function isValidSquare(r, c) {
   return r >= 0 && r < 8 && c >= 0 && c < 8 && !CORNERS.has(`${r},${c}`);
 }
@@ -58,22 +54,28 @@ function createBoard() {
     board[r][c] = undefined;
   }
 
-  const bluePositions = [
-    ...range(2, 5).map(c => [0, c]),
-    ...range(1, 6).map(c => [1, c]),
-    ...range(0, 7).map(c => [2, c])
-  ];
-  for (const [r, c] of bluePositions) {
-    board[r][c] = ['blue'];
+  var redPositions  = [];
+  var bluePositions = [];
+
+  for (var row = 1; row <= 6; row++) {
+    if (row === 1 || row === 3 || row === 5) {
+      // Pattern: R R V V R R
+      redPositions.push([row, 1], [row, 2], [row, 5], [row, 6]);
+      bluePositions.push([row, 3], [row, 4]);
+    } else {
+      // Pattern: V V R R V V
+      bluePositions.push([row, 1], [row, 2], [row, 5], [row, 6]);
+      redPositions.push([row, 3], [row, 4]);
+    }
   }
 
-  const redPositions = [
-    ...range(2, 5).map(c => [7, c]),
-    ...range(1, 6).map(c => [6, c]),
-    ...range(0, 7).map(c => [5, c])
-  ];
-  for (const [r, c] of redPositions) {
-    board[r][c] = ['red'];
+  for (var i = 0; i < bluePositions.length; i++) {
+    var bc = bluePositions[i];
+    board[bc[0]][bc[1]] = ['blue'];
+  }
+  for (var j = 0; j < redPositions.length; j++) {
+    var rc = redPositions[j];
+    board[rc[0]][rc[1]] = ['red'];
   }
 
   return board;
